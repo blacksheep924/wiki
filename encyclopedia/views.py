@@ -8,10 +8,12 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def title(request):
-    return render(request, "encyclopedia/title.html", {
-        
-        "content": util.get_entry("CSS")
+def title(request, title):
+    
+    return render(request, "encyclopedia/title.html", 
+        {
+
+        "content": util.get_entry(title)
     })
 
 
