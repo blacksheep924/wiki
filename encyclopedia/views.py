@@ -3,7 +3,7 @@ from markdown2 import markdown
 from django import forms
 import os
 from django.http import HttpResponse 
-
+import random
 from . import util
 
 
@@ -63,7 +63,7 @@ def new(request):
             if new_title.lower() == title.lower():
                 return render(request, "encyclopedia/error.html", {'message' : "This entry already exist."})
             else:
-                html_content = new_page
+                
                 markdown_content = f"# {new_title}\n{new_page}"
 
                 folder_path = os.path.join(os.path.dirname(__file__), '..', 'entries')
@@ -90,8 +90,17 @@ def edit(request):
     else:
         page_content = util.get_entry(title)
 
-    
+        
         return render(request, "encyclopedia/edit.html",{'title' : title, 'content' : page_content})
+    
+def rand(request):
+    random_list = util.list_entries()
+    random_number = random.randint(0, len(random_list)-1)
+    random_entry = random_list[random_number]
+    title = random_entry
+    return redirect('title', title = title)
+
+
 
     
 
